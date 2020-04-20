@@ -75,7 +75,7 @@ do
 				key="${keys[${currentKey}]}"
 				url=$(echo "https://www.virustotal.com/vtapi/v2/file/report?apikey=${key}&resource=${hash}"|tr -d '\r') #create the url without \r
 				curl -s --request GET --url "$url" >> noise #Get the goods, silently
-				echo -e "${currentHash+1} of ${NUMBERHASHES+1} hashes completed" #So you know where you are
+				echo -e "$(($currentHash+1)) of $((NUMBERHASHES+1)) hashes completed" #So you know where you are
 				n=$(( $n + 1 ))
 				currentHash=$(( $currentHash + 1 ))
 			done
