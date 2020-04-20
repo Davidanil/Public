@@ -32,7 +32,8 @@ currentKey=0
 
 ##Function to check if we reached EOF in the hash file
 check() {
-	if [ $currentHash -ge $NUMBERHASHES ] #making sure we won't pass number of hashes
+	echo hash $currentHash and $NUMBERHASHES  
+	if [ $currentHash -gt $NUMBERHASHES ] #making sure we won't pass number of hashes
 	then
 		trim_noise_end
 		exit 1
@@ -41,11 +42,6 @@ check() {
 
 ##Function to beautify
 trim_noise_end () {
-	sed 's/,//g' tmp0 > $OUTPUTFILE
-
-	#Remove files that were basically variables
-	rm tmp*
-	rm noise
 	echo Start time: "$STARTTIME" #For kicks, remember?
 	echo End time: "$(date)" 
 	echo Done, open "$OUTPUTFILE" to check them
@@ -57,21 +53,27 @@ do
 	check
 		starttime="$(date -u +%s)"
 		currentKey=0
+		echo keys $currentKey and $NUMBERKEYS
 		while [ $currentKey -le $NUMBERKEYS ] #This loop goes through all the keys
 		do	
+			echo fick
 			n=0
-			while [ $n -lt $VIRUSTOTALPERMITEDREQUESTSperMIN ] #This loop only uses each key VIRUSTOTALPERMITEDREQUESTSperMIN number of times
+			while [ $n -le $VIRUSTOTALPERMITEDREQUESTSperMIN ] #This loop only uses each key VIRUSTOTALPERMITEDREQUESTSperMIN number of times
 			do
+				echo fack
 				check
 				hash="${hashes[${currentHash}]}"
 				key="${keys[${currentKey}]}"
-				url=$(echo "https://www.virustotal.com/api/v3/files/${hash}"|tr -d '\r') #create the url without \r
-				key_string="x-apikey: $key"
-				curl -s --request GET --url "$url" --header "$key_string">> noise #Get the goods, silently
-				#Honestly one of the hardest parts, regex in bash? wtf...
+				url=$(echo "https://www.virustotal.com/vtapi/v2/file/report?apikey=${key}&resource=${hash}"|tr -d '\r') #create 
+				curl --request GET --url "$url" > noise #Get the goods, silently
 				grep -o '"md5": "\w*"' noise >> tmp0
-				grep -o '"malicious": \d*,' noise >> tmp0
-				echo -e "$currentHash of $NUMBERHASHES hashes completed" #So you know where you are
+				grep -o '"positives": \w*,' noise >> tmp0
+				echo ç
+				sed -e 's/,//g' -e 's/"//g' -e 's/positives:/vtscore:/g' tmp0 >> $OUTPUTFILE
+				echo s
+				#rm noise
+				#rm tmp0
+				echo -e "${currentHash+1} of ${NUMBERHASHES+1} hashes completed" #So you know where you are
 				n=$(( $n + 1 ))
 				currentHash=$(( $currentHash + 1 ))
 			done
