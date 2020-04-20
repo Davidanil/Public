@@ -41,17 +41,7 @@ check() {
 
 ##Function to beautify
 trim_noise_end () {
-	#Honestly one of the hardest parts, regex in bash? wtf...
-	grep -o '"md5": "\w*"' noise >> tmp0
-	grep -o '"malicious": \d*,' noise >> tmp0
-
-	#Probably you can put these 4 sed commands in a row, I just couldn't be bothered.
-	sed 's/md5//g' tmp0 > tmp1
-	sed 's/malicious//g' tmp1 > tmp0
-	sed 's/ //g' tmp0 > tmp1
-	sed 's/"//g' tmp1 > tmp0
-	sed 's/://g' tmp0 > tmp1
-	sed 's/,//g' tmp1 > $OUTPUTFILE
+	sed 's/,//g' tmp0 > $OUTPUTFILE
 
 	#Remove files that were basically variables
 	rm tmp*
@@ -78,6 +68,9 @@ do
 				url=$(echo "https://www.virustotal.com/api/v3/files/${hash}"|tr -d '\r') #create the url without \r
 				key_string="x-apikey: $key"
 				curl -s --request GET --url "$url" --header "$key_string">> noise #Get the goods, silently
+				#Honestly one of the hardest parts, regex in bash? wtf...
+				grep -o '"md5": "\w*"' noise >> tmp0
+				grep -o '"malicious": \d*,' noise >> tmp0
 				echo -e "$currentHash of $NUMBERHASHES hashes completed" #So you know where you are
 				n=$(( $n + 1 ))
 				currentHash=$(( $currentHash + 1 ))
