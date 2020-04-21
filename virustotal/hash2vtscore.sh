@@ -41,6 +41,9 @@ check() {
 
 ##Function to beautify
 trim_noise_end () {
+	sed -e 's/,//g' -e 's/"//g' -e 's/positives:/vtscore:/g' tmp0 >> $OUTPUTFILE
+	rm noise
+	rm tmp0
 	echo Start time: "$STARTTIME" #For kicks, remember?
 	echo End time: "$(date)" 
 	echo Done, open "$OUTPUTFILE" to check them
@@ -61,17 +64,14 @@ do
 				hash="${hashes[${currentHash}]}"
 				key="${keys[${currentKey}]}"
 				url=$(echo "https://www.virustotal.com/vtapi/v2/file/report?apikey=${key}&resource=${hash}"|tr -d '\r') #create 
-				curl -s --request GET --url "$url" > noise #Get the goods, silently
-				grep -o '"md5": "\w*"' noise >> tmp0
-				grep -o '"positives": \w*,' noise >> tmp0
-				echo "" >> tmp0
-				sed -e 's/,//g' -e 's/"//g' -e 's/positives:/vtscore:/g' tmp0 >> $OUTPUTFILE
+				noise=$(curl -s --request GET --url "$url") #Get the goods, silently
 				echo -e "$(($currentHash+1)) of $(($NUMBERHASHES+1)) hashes completed" #So you know where you are
+				echo "$noise" | grep -o '"md5": "\w*"' >> tmp0
+				echo "$noise" | grep -o '"positives": \w*,' >> tmp0
+				echo "" >> tmp0
 				n=$(( $n + 1 ))
 				currentHash=$(( $currentHash + 1 ))
 			done
-		rm noise
-		rm tmp0
 		currentKey=$(($currentKey + 1))
 		done
 	endtime="$(date -u +%s)"
