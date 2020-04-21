@@ -64,6 +64,7 @@ do
 				curl -s --request GET --url "$url" > noise #Get the goods, silently
 				grep -o '"md5": "\w*"' noise >> tmp0
 				grep -o '"positives": \w*,' noise >> tmp0
+				echo "" >> tmp0
 				sed -e 's/,//g' -e 's/"//g' -e 's/positives:/vtscore:/g' tmp0 >> $OUTPUTFILE
 				echo -e "$(($currentHash+1)) of $(($NUMBERHASHES+1)) hashes completed" #So you know where you are
 				n=$(( $n + 1 ))
