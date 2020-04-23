@@ -1,12 +1,12 @@
 #!/bin/bash
 ##For COSI, to check IOC's from external sources..
-##Made by: p-dcardoso
+##Made by: davidanil
 ##Improved by: you, maybe
 
 ##You will need mapfile, cat, grep, curl, echo, date, sed. Butt I am guessing you have that by default
 ##Insert hashes in the hashes.txt
 ##Insert more API keys in api_keys.txt. Seriously, create an account and add your API key, it will go much faster ;D
-##run command './hash2MD5_virustotal.sh' after previous steps being completed.
+##run command './hash2vtscore.sh' after previous steps being completed.
 ##Output file by default is vtscore.txt but change it if you want. (But why would you?)
 
 
