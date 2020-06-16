@@ -28,6 +28,10 @@ script.sh and pai.py are a duo!
 Is a watchdog that checks if the .py is done, and constantly changes ip
 FIXME to be more global (add arguments)
 
+**cert_checker.py**
+Queries several url's certificates, verifies if they are expired or about to (acording to the number of days you want) and notifies you via email (gmail configured)
+It works near-perfectly.
+
 ### Intro
   Not yet tested in large scale, nor will I, since it is illegal to own a database. Do it at your own risk!
   Scraper gets the page and transforms into beautifulSoup xD. 
