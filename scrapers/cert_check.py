@@ -4,7 +4,7 @@
 #This is a code to verify certificates from several url's and notify yourself or others if any is expired or about to.
 #
 #
-__author__ = "p-dcardoso"
+__author__ = "davidanil"
 from urlparse import urlparse
 import httplib, sys
 import smtplib
@@ -16,8 +16,7 @@ import time
 import argparse
 import sys
 
-urls = {'www.gnr.pt', 'psp.pt', 'portalsocial.gnr.pt' , 'portalsocial.psp.pt', 'www.igai.pt', 'www.sg.mai.gov.pt' , 'portalcontraordenacoes.ansr.pt', 'www.portaldoeleitor.pt'}
-#www.prociv.pt e 'www.ansr.pt' nao tem certificado
+urls = {'url.here.please.com'}
 
 sender_email = 'senderEMAIL@DOMAIN.COM'
 receiver_email = ['receiverMAIL@DOMAIN.COM']
@@ -118,7 +117,7 @@ def sendErrorMail(url, error):
         message = '''\
 Subject: [Certificate_Script] ERROR - '''+url+'''
 
-O script deparou-se com o seguinte erro: \n\n'''+error+''' \n\nO script encontra-se na maquina do PTRG.\nVerificar se o script parou de funcionar\nCorrigir o erro e voltar a executar.\n\nCumprimentos,\nO script'''
+O script deparou-se com o seguinte erro: \n\n'''+error+''' \n\n\nVerificar se o script parou de funcionar\nCorrigir o erro e voltar a executar.\n\nCumprimentos,\nO script'''
 
         server.sendmail(sender_email, receiver_email, message)
     except Exception as e:
