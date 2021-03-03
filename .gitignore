@@ -1,2 +1,5 @@
 
 *.txt
+virustotal/api_keys.txt
+virustotal/hash2anything.sh
+virustotal/hashes.txt
