@@ -3,8 +3,7 @@ Criação de um 'vuln_feed.py' que da scrape as vulnerabilidades existentes nos 
 
 ## Usage:
 ```
-pip install -r requirements.txt
-python <chooseyourpoison>_feed.py 
+python checkpoint_feed.py 
 
 *DON'T* use send_feed.py if you are unsure, or else we'll be mail-spammed
 ```
