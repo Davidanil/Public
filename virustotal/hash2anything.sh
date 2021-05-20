@@ -57,7 +57,7 @@ do
 		while [ $currentKey -le $NUMBERKEYS ] #This loop goes through all the keys
 		do	
 			n=0
-			while [ $n -le $VIRUSTOTALPERMITEDREQUESTSperMIN ] #This loop only uses each key VIRUSTOTALPERMITEDREQUESTSperMIN number of times
+			while [ $n -lt $VIRUSTOTALPERMITEDREQUESTSperMIN ] #This loop only uses each key VIRUSTOTALPERMITEDREQUESTSperMIN number of times
 			do
 				check
 				hash="${hashes[${currentHash}]}"
